@@ -23,13 +23,13 @@ int main(void)
 
     InitAudioDevice();
 
-    MusicPlayer player("../resources/rwbk.wav");
-    MusicPlayer player2("../resources/rwbk.wav");
-    //MusicPlayer player2("../resources/music2.wav");
+    MusicPlayer player("../resources/music.wav");
+    MusicPlayer player2("../resources/music.wav");
 
-    //player.play();
-    //player2.play();
-    //player2.play();
+    player.play();
+    player2.play();
+
+    
 
     Level level;
     Camera camera = { 0 };
@@ -54,6 +54,12 @@ int main(void)
         EndTextureMode();
 
 
+        player.update();
+        player2.update();
+
+        if (IsKeyPressed(KEY_SPACE)) {
+            player.start_effect();
+        }
 
         // Draw
         BeginDrawing();
