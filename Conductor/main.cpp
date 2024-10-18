@@ -1,14 +1,15 @@
 #include "raylib.h"
+#include "main.h"
 
 #include <iostream>
 
 int main(void)
 {
     // Initialization
-    const int screenWidth = 800;
-    const int screenHeight = 450;
+    const int screenWidth = 1280;
+    const int screenHeight = 720;
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+    InitWindow(screenWidth, screenHeight, "Conductor game");
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
@@ -35,7 +36,7 @@ int main(void)
 
         ClearBackground(RAYWHITE);
 
-        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+        DrawText("Hello world!", 190, 200, 20, LIGHTGRAY);
 
         EndDrawing();
     }
