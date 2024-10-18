@@ -1,6 +1,8 @@
 #include "raylib.h"
 #include "main.h"
 
+#include <iostream>
+
 int main(void)
 {
     // Initialization
@@ -10,6 +12,18 @@ int main(void)
     InitWindow(screenWidth, screenHeight, "Conductor game");
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+
+    InitAudioDevice();
+
+    auto music = LoadWave("../resources/music.wav");
+    auto sound = LoadSoundFromWave(music);
+
+
+
+
+    std::cout << IsSoundReady(sound) << "\n";
+
+    PlaySound(sound);
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
