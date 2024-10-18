@@ -1,10 +1,8 @@
 #include "raylib.h"
 #include "main.h"
-<<<<<<< HEAD
-#include "musicplayer.h"
-=======
+
 #include "graphics.h"
->>>>>>> 6f81d59855097c64a559addb4f2de2a9f63b4ef2
+
 
 #include <iostream>
 #include "level.h"
@@ -46,23 +44,16 @@ int main(void)
     {
         // Update
         // TODO: Update your variables here
-<<<<<<< HEAD
-       
-        const auto x = GetMouseX();
-=======
+
         level.update();
 
         // Pre-draw: Render to texture
         BeginTextureMode(Graphics::getTrackRenderTexture());
         Graphics::drawRenderTexture(level.getTrack());
         EndTextureMode();
->>>>>>> 6f81d59855097c64a559addb4f2de2a9f63b4ef2
-
-        const auto score = 2 * x / (float)GetScreenWidth();
 
 
-        player.update(score);
-        player2.update(0.0f);
+
         // Draw
         BeginDrawing();
 
