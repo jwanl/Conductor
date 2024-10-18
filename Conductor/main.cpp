@@ -40,6 +40,7 @@ int main(void)
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
         // Update
+        std::cout << GetFPS() << "\n";
         // TODO: Update your variables here
         level.update();
 
