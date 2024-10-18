@@ -5,9 +5,10 @@ RenderTexture2D Graphics::m_track_plane_tex;
 
 void Graphics::init()
 {
-	Mesh planeMesh = GenMeshPlane(1.0f, 16.0f, 1, 1);
+	Mesh planeMesh = GenMeshPlane(8.0f, 1.0f, 1, 1);
 	m_track_plane = LoadModelFromMesh(planeMesh);
-	m_track_plane_tex = LoadRenderTexture(512, 64);
+	m_track_plane_tex = LoadRenderTexture(256, 32);
+	SetMaterialTexture(m_track_plane.materials, 0, m_track_plane_tex.texture);
 }
 
 RenderTexture2D& Graphics::getTrackRenderTexture()
@@ -21,19 +22,17 @@ void Graphics::drawRenderTexture(Track& track)
 	ClearBackground(WHITE);
 	
 	auto iterator = track.getCurrentValue();
-	for (int i = 0; (iterator != track.getEnd()) && (i < 16); iterator++, i++)
+	for (int i = 0; (iterator != track.getEnd()) || (i < 16); iterator++, i++)
 	{
-		if (*iterator)
-			DrawRectangle(i * 32, 0, 32, 512, BLUE);
+		DrawRectangle(i * 16, *iterator ? 28 : 0, 16, 4, BLUE);
 	}
 }
 
 void Graphics::renderTrack()
 {
-	// TODO: tarviiko tätä oikeasti tehdä aina vai riittääkö että tekee kerran
-	SetMaterialTexture(m_track_plane.materials, 0, m_track_plane_tex.texture);
+	Vector3 pos = { 2.0f, 0.2f, 0.4f };
+	Vector3 rax = { 1.0f, 0.0f, 0.0f };
+	Vector3 size = { 1.0f, 1.0f, 1.0f };
 
-	Vector3 pos = { 0.0f, 0.0f, 0.0f };
-
-	DrawModel(m_track_plane, pos, 1.0, RED);
+	DrawModelEx(m_track_plane, pos, rax, 270.0f, size, WHITE);
 }
