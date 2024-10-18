@@ -4,3 +4,5 @@ x86/
 
 vcpkg_installed
 *.json
+
+*.vcxproj

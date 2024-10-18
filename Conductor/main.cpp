@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include "main.h"
+#include "musicplayer.h"
 
 #include "graphics.h"
 
@@ -26,8 +27,8 @@ int main(void)
     MusicPlayer player2("../resources/rwbk.wav");
     //MusicPlayer player2("../resources/music2.wav");
 
-    player.play();
-    player2.play();
+    //player.play();
+    //player2.play();
     //player2.play();
 
     Level level;

@@ -13,10 +13,7 @@ void Track::advance()
 
 bool Track::isOver()
 {
-<<<<<<< HEAD
-	m_time_iterator >= m_track_data.size();
-	throw "";
-=======
+
 	return m_time_iterator >= m_track_data.size();
 }
 
@@ -28,5 +25,4 @@ std::vector<bool>::const_iterator Track::getCurrentValue() const
 std::vector<bool>::const_iterator Track::getEnd() const
 {
 	return m_track_data.end();
->>>>>>> 6f81d59855097c64a559addb4f2de2a9f63b4ef2
 }
