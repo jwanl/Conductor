@@ -1,8 +1,13 @@
 #include "raylib.h"
 #include "main.h"
+<<<<<<< HEAD
 #include "musicplayer.h"
+=======
+#include "graphics.h"
+>>>>>>> 6f81d59855097c64a559addb4f2de2a9f63b4ef2
 
 #include <iostream>
+#include "level.h"
 
 
 int main(void)
@@ -27,13 +32,31 @@ int main(void)
     player2.play();
     //player2.play();
 
+    Level level;
+    Camera camera = { 0 };
+    camera.position = { -3.0f, 0.0f, 0.0f };    // Camera position
+    camera.target = { 0.0f, 0.0f, 0.0f };      // Camera looking at point
+    camera.up = { 0.0f, 0.0f, 1.0f };          // Camera up vector (rotation towards target)
+    camera.fovy = 45.0f;                                // Camera field-of-view Y
+    camera.projection = CAMERA_PERSPECTIVE;             // Camera projection type
+    Graphics::init();
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
         // Update
         // TODO: Update your variables here
+<<<<<<< HEAD
        
         const auto x = GetMouseX();
+=======
+        level.update();
+
+        // Pre-draw: Render to texture
+        BeginTextureMode(Graphics::getTrackRenderTexture());
+        Graphics::drawRenderTexture(level.getTrack());
+        EndTextureMode();
+>>>>>>> 6f81d59855097c64a559addb4f2de2a9f63b4ef2
 
         const auto score = 2 * x / (float)GetScreenWidth();
 
@@ -45,7 +68,9 @@ int main(void)
 
         ClearBackground(RAYWHITE);
 
-        DrawText("Hello world!", 190, 200, 20, LIGHTGRAY);
+        BeginMode3D(camera);
+        Graphics::renderTrack();
+        EndMode3D();
 
         EndDrawing();
     }
