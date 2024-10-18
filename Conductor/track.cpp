@@ -13,6 +13,7 @@ void Track::advance()
 
 bool Track::isOver()
 {
+
 	return m_time_iterator >= m_track_data.size();
 }
 

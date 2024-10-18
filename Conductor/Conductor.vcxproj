@@ -133,14 +133,23 @@
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="main.cpp" />
+<<<<<<< HEAD
+    <ClCompile Include="musicplayer.cpp" />
+=======
+>>>>>>> 6f81d59855097c64a559addb4f2de2a9f63b4ef2
     <ClCompile Include="track.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphics.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="main.h" />
+<<<<<<< HEAD
+    <ClInclude Include="musicplayer.h" />
+    <ClInclude Include="track.h" />
+=======
     <ClInclude Include="track.h" />
     <ClInclude Include="track_data.h" />
+>>>>>>> 6f81d59855097c64a559addb4f2de2a9f63b4ef2
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
