@@ -8,4 +8,5 @@ void Track::advance()
 bool Track::isOver()
 {
 	m_time_iterator >= m_track_data.size();
+	throw "";
 }

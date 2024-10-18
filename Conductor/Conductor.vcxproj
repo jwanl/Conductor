@@ -130,7 +130,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="level.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="musicplayer.cpp" />
+    <ClCompile Include="track.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="graphics.h" />
+    <ClInclude Include="level.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="musicplayer.h" />
+    <ClInclude Include="track.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
