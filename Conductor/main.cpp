@@ -14,8 +14,8 @@ int main(void)
     
 
     // Initialization
-    const int screenWidth = 1920;
-    const int screenHeight = 1080;
+    const int screenWidth = 1280;
+    const int screenHeight = 720;
 
     InitWindow(screenWidth, screenHeight, "Conductor game");
 
@@ -29,7 +29,7 @@ int main(void)
     //MusicPlayer player4("../resources/rwbk.wav");
 
 
-    auto img = LoadImage("../resources/avain.png");
+    /*auto img = LoadImage("../resources/avain.png");
     
     for (int i = 0; i < img.height; i++) {
         for (int j = 0; j < img.width; j++) {
@@ -39,11 +39,9 @@ int main(void)
                 ImageDrawPixel(&img, j, i, p);
              }
         }
-    }
+    }*/
 
     //ToggleFullscreen();
-    MusicPlayer player("../resources/rwbk.wav");
-    MusicPlayer player2("../resources/rwbk.wav");
 
     player.play();
     player2.play();

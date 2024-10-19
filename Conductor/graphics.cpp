@@ -28,7 +28,7 @@ void Graphics::drawRenderTexture(Track& track)
 	double leftSide = track.getTime();
 	for (Vector2& item : sub)
 	{
-		DrawCircle((item.x - leftSide) * 64, item.y * 64 + 32, 8, BLUE);
+		DrawCircle((item.x - leftSide) * 128, item.y * 64 + 32, 8, BLUE);
 	}
 }
 
