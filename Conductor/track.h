@@ -1,17 +1,22 @@
 #pragma once
 
 #include <vector>
+#include <algorithm>
 #include "track_data.h"
+#include "raylib.h"
 
 class Track 
 {
 public:
 	Track();
-	void advance();
+	void update(float frameTime);
 	bool isOver();
-	std::vector<bool>::const_iterator getCurrentValue() const;
-	std::vector<bool>::const_iterator getEnd() const;
+	const std::vector<Vector2> getNextValues() const;
+	float getWindow() const;
+	double getTime() const;
 private:
-	std::size_t m_time_iterator = 0;
-	std::vector<bool> m_track_data;
+	std::size_t m_step = 0;
+	double m_time = 0.0;
+	std::vector<Vector2> m_track_data;
+	float m_window = 8.0f;
 };
