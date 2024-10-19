@@ -26,7 +26,7 @@ int main(void)
 
 
     
-    ToggleFullscreen();
+    //ToggleFullscreen();
 
   
 
@@ -40,7 +40,8 @@ int main(void)
     camera.up = { 0.0f, 0.0f, 1.0f };          // Camera up vector (rotation towards target)
     camera.fovy = 45.0f;                                // Camera field-of-view Y
     camera.projection = CAMERA_PERSPECTIVE;             // Camera projection type
-    Graphics::init("../resources/background.png");
+    Graphics::init("../resources/background.png", 
+        {"../resources/conductor_0.png", "../resources/conductor_1.png", "../resources/conductor_2.png"});
 
     level.play();
 
@@ -73,6 +74,8 @@ int main(void)
         BeginMode3D(camera);
         Graphics::renderTrack();
         EndMode3D();
+
+        Graphics::drawConductor(level);
 
         EndDrawing();
     }
