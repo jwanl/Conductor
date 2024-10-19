@@ -5,7 +5,7 @@
 #include "raylib.h"
 #include "raymath.h"
 
-constexpr float ANIMATION_TICK_INTERVAL = 0.08f;
+constexpr float ANIMATION_TICK_INTERVAL = 0.05f;
 
 class Graphics {
 public:
