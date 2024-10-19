@@ -24,7 +24,7 @@ int main(void)
 
     InitWindow(screenWidth, screenHeight, "Super Conductor Bros");
 
-    SetTargetFPS(240);               // Set our game to run at 60 frames-per-second
+    SetTargetFPS(30);               // Set our game to run at 60 frames-per-second
 
     InitAudioDevice();
 
@@ -106,11 +106,11 @@ int main(void)
 
 
             auto f = 64 + std::sin(GetTime() * 1.0f) * 1;
-            auto vec = MeasureTextEx(GetFontDefault(),select_level, f, 1.0f);
+            auto vec = MeasureTextEx(GetFontDefault(),select_level, f, 4.0f);
 
             time_out -= GetFrameTime();
 
-            DrawTextEx(GetFontDefault(), TextFormat("%s (%is)",select_level, (int)time_out), {GetScreenWidth() / 2.0f - vec.x / 2.0f, 320.0f}, f, 1.0f, col);
+            DrawTextEx(GetFontDefault(), TextFormat("%s (%is)",select_level, (int)time_out), {GetScreenWidth() / 2.0f - vec.x / 2.0f, 320.0f}, f, 4.0f, col);
 
             for (int i = 0; i < 3; i++) {
                 auto f = 64 + std::sin(GetTime() * 1.0f) * 1;
@@ -118,8 +118,8 @@ int main(void)
                     f = 92;
 
                 }
-                auto vec = MeasureTextEx(GetFontDefault(), levels[i], f, 1.0f);
-                DrawTextEx(GetFontDefault(), levels[i], {GetScreenWidth() / 2.0f - vec.x / 2.0f, 400.0f + i * 80}, f, 1.0f, col);
+                auto vec = MeasureTextEx(GetFontDefault(), levels[i], f, 4.0f);
+                DrawTextEx(GetFontDefault(), levels[i], {GetScreenWidth() / 2.0f - vec.x / 2.0f, 400.0f + i * 80}, f, 4.0f, col);
             }
 
             if (IsKeyPressed(KEY_SPACE)) {
