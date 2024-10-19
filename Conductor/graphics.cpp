@@ -28,7 +28,7 @@ void Graphics::init(const char* backgroundTexture, std::vector<std::string> cond
 
 	m_conductor_anim_phase = 0;
 	m_conductor_anim_target = 0;
-	m_shake_multiplier = 2.0f;
+	m_shake_multiplier = 0.0f;
 	m_conductor_baton_prev = false;
 	m_tick_time = 0.0f;
 }
