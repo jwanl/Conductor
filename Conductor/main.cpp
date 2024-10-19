@@ -31,14 +31,15 @@ int main(void)
     const char* level_musics[] = {
         "../resources/rwbk.mp3",
         "../resources/music.wav",
+        "../resources/rick.wav",
     };
     //const char* music = "../resources/rwbk.mp3";
     
-    MusicPlayer menuplayer("../resources/rick.wav", 2.0f, 0.01f, 5.0f);
+    //MusicPlayer menuplayer("../resources/rick.wav", 2.0f, 0.01f, 5.0f);
     
 
-    menuplayer.play();
-    menuplayer.set_volume(0.05f);
+    //menuplayer.play();
+    //menuplayer.set_volume(0.05f);
 
     Level* level = nullptr;
     int lastScore = 0;
@@ -75,13 +76,13 @@ int main(void)
         case GameState::MainMenu: {
             BeginDrawing();
 
-            const auto t = GetTime();
+           /* const auto t = GetTime();
             if ((t - t0) > 8.0f) {
                 t0 = t;
                 menuplayer.start_effect();
             }
 
-            menuplayer.update();
+            menuplayer.update();*/
 
             Color col;
             col.g = 255.0f * (std::sin(GetTime() * 1.3f) * 0.5f + 0.5f);
@@ -95,7 +96,7 @@ int main(void)
             const char* levels[] = {
                 "level 1",
                 "level 2",
-                //"level 3",
+                "level 3",
             };
             
 
@@ -111,7 +112,7 @@ int main(void)
 
             DrawTextEx(GetFontDefault(), TextFormat("%s (%is)",select_level, (int)time_out), {GetScreenWidth() / 2.0f - vec.x / 2.0f, 320.0f}, f, 1.0f, col);
 
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 3; i++) {
                 auto f = 64 + std::sin(GetTime() * 1.0f) * 1;
                 if (i == level_selected) {
                     f = 92;
@@ -122,14 +123,14 @@ int main(void)
             }
 
             if (IsKeyPressed(KEY_SPACE)) {
-                level_selected = (level_selected + 1) % 2;
+                level_selected = (level_selected + 1) % 3;
             }
 
             if (time_out < 0.0f) {
                 state = GameState::Level;
                 level = new Level(level_musics[level_selected]);
                 level->play();
-                menuplayer.stop();
+                //menuplayer.stop();
             }
 
           
@@ -160,7 +161,7 @@ int main(void)
 
             Graphics::drawConductor(*level);
 
-            const auto text_x = GetScreenWidth() * 0.7;
+            const auto text_x = GetScreenWidth() * 0.6;
             const auto text_y = GetScreenHeight() * 0.0f;
             DrawText(TextFormat("POINTS: %i", level->score()), text_x, text_y, 64,WHITE);
             DrawFPS(0, 0);
@@ -190,7 +191,7 @@ int main(void)
             
             const auto text_x = GetScreenWidth() * 0.5f - 6 * 36;
             const auto text_y = GetScreenHeight() * 0.5f;
-            DrawText(TextFormat("SCORE: %i", lastScore), text_x, text_y, 64, WHITE);
+            DrawText(TextFormat("You scored %i points", lastScore), text_x, text_y, 64, YELLOW);
 
             EndDrawing();
 
@@ -206,7 +207,7 @@ int main(void)
 
     }
 
-    menuplayer.unload();
+    //menuplayer.unload();
 
     CloseAudioDevice();
 

@@ -42,7 +42,7 @@ void Level::update()
 	auto sub = m_track.getNextValues();
 	double leftSide = m_track.getTime();
 
-	const auto window = 0.15f;
+	const auto window = 0.1f;
 	
 	num = 0;
 	for (const auto& item : sub)
