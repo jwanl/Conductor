@@ -15,7 +15,6 @@ enum class GameState {
 
 int main(void)
 {
-
     SetTraceLogLevel(LOG_TRACE);
     GameState state = GameState::MainMenu;
 
@@ -28,7 +27,12 @@ int main(void)
     SetTargetFPS(240);               // Set our game to run at 60 frames-per-second
 
     InitAudioDevice();
-    const char* music = "../resources/rwbk.mp3";
+
+    const char* level_musics[] = {
+        "../resources/rwbk.mp3",
+        "../resources/music.wav",
+    };
+    //const char* music = "../resources/rwbk.mp3";
     
     MusicPlayer menuplayer("../resources/rick.wav", 2.0f, 0.01f, 5.0f);
     
@@ -41,6 +45,9 @@ int main(void)
 
     Level* level = nullptr;
 
+    int level_selected = 0;
+    float time_out = 8.0f;
+    float start_time = GetTime();
     
 
     Camera camera = { 0 };
@@ -75,28 +82,58 @@ int main(void)
             col.a = 255;
 
 
+            const char* title = "Super Conductor!";
+            const char* select_level = "Select level";
+            const char* levels[] = {
+                "level 1",
+                "level 2",
+                //"level 3",
+            };
+            
+
             ClearBackground(BLACK);
-            auto w = MeasureText("Super Conductor!", 128);
-            DrawText("Super Conductor!", GetScreenWidth() / 2.0f - w / 2.0f, 50, 128, col);
+            auto w = MeasureText(title, 128);
+            DrawText(title, GetScreenWidth() / 2.0f - w / 2.0f, 50, 128, col);
 
 
             auto f = 64 + std::sin(GetTime() * 1.0f) * 1;
-            auto vec = MeasureTextEx(GetFontDefault(),"Press the only button to start!", f, 1.0f);
-            DrawTextEx(GetFontDefault(), "Press the only button to start!", { GetScreenWidth() / 2.0f - vec.x / 2.0f, 320.0f }, f, 1.0f, col);
-            //DrawText("Press the only button to start!", GetScreenWidth() / 2.0f - w / 2.0f, 320, f, WHITE);
+            auto vec = MeasureTextEx(GetFontDefault(),select_level, f, 1.0f);
+
+            time_out = 8.0f - GetTime() - start_time;
+
+            DrawTextEx(GetFontDefault(), TextFormat("%s (%is)",select_level, (int)time_out), {GetScreenWidth() / 2.0f - vec.x / 2.0f, 320.0f}, f, 1.0f, col);
+
+            for (int i = 0; i < 2; i++) {
+                auto f = 64 + std::sin(GetTime() * 1.0f) * 1;
+                if (i == level_selected) {
+                    f = 92;
+
+                }
+                auto vec = MeasureTextEx(GetFontDefault(), levels[i], f, 1.0f);
+                DrawTextEx(GetFontDefault(), levels[i], {GetScreenWidth() / 2.0f - vec.x / 2.0f, 400.0f + i * 80}, f, 1.0f, col);
+            }
 
             if (IsKeyPressed(KEY_SPACE)) {
+                level_selected = (level_selected + 1) % 2;
+            }
+
+            if (time_out < 0.0f) {
                 state = GameState::Level;
-                level = new Level(music);
+                level = new Level(level_musics[level_selected]);
                 level->play();
                 menuplayer.stop();
-                //menuplayer.unload();
             }
+
+          
 
             EndDrawing();
         }break;
         case GameState::Level: {
             level->update();
+
+            if (level->isOver()) {
+                // Win screen here
+            }
 
             // Pre-draw: Render to texture
             BeginTextureMode(Graphics::getTrackRenderTexture());
@@ -130,9 +167,6 @@ int main(void)
         }break;
         }
 
-        
-
-
     }
 
     delete level;
@@ -142,8 +176,6 @@ int main(void)
 
     // De-Initialization
     CloseWindow();        // Close window and OpenGL context
-
-
 
     return 0;
 }
