@@ -45,7 +45,11 @@ int main(void)
 
     int level_selected = 0;
     float time_out = 8.0f;
-    float start_time = GetTime();
+
+    float winMsgTime = 5.0f;
+    float winMsgLeft = winMsgTime;
+
+    //Timer* winTimer = nullptr;
     
 
     Camera camera = { 0 };
@@ -64,6 +68,8 @@ int main(void)
         if (IsKeyPressed(KEY_TAB)) {
             ToggleFullscreen();
         }
+        // Update all timers
+        //Timer::updateAll(GetFrameTime());
         
         switch (state) {
         case GameState::MainMenu: {
@@ -101,7 +107,7 @@ int main(void)
             auto f = 64 + std::sin(GetTime() * 1.0f) * 1;
             auto vec = MeasureTextEx(GetFontDefault(),select_level, f, 1.0f);
 
-            time_out = 8.0f - GetTime() - start_time;
+            time_out -= GetFrameTime();
 
             DrawTextEx(GetFontDefault(), TextFormat("%s (%is)",select_level, (int)time_out), {GetScreenWidth() / 2.0f - vec.x / 2.0f, 320.0f}, f, 1.0f, col);
 
@@ -170,6 +176,15 @@ int main(void)
         }break;
         case GameState::WinScreen: {
 
+            /*if (winTimer == nullptr) {
+                winTimer = new Timer(5.0f);
+            }
+
+            if (winTimer->isDone()) {
+                state = GameState::MainMenu;
+                delete winTimer;
+            }*/
+
             BeginDrawing();
             ClearBackground(BLACK);
             
@@ -178,6 +193,13 @@ int main(void)
             DrawText(TextFormat("SCORE: %i", lastScore), text_x, text_y, 64, WHITE);
 
             EndDrawing();
+
+            winMsgLeft -= GetFrameTime();
+            if (winMsgLeft <= 0.0f) {
+                state = GameState::MainMenu;
+                winMsgLeft = winMsgTime;
+                time_out = 8.0f;
+            }
 
         }break;
         }
