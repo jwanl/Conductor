@@ -36,9 +36,6 @@ int main(void)
     menuplayer.play();
     menuplayer.set_volume(0.05f);
 
-    //ToggleFullscreen();
-  
-
     Level* level = nullptr;
 
     
@@ -56,6 +53,10 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
+        if (IsKeyPressed(KEY_TAB)) {
+            ToggleFullscreen();
+        }
+        
         switch (state) {
         case GameState::MainMenu: {
             BeginDrawing();
@@ -126,6 +127,16 @@ int main(void)
             EndDrawing();
         }break;
         case GameState::WinScreen: {
+
+            BeginDrawing();
+            ClearBackground(BLACK);
+            
+            const auto text_x = GetScreenWidth() * 0.5f - 6 * 36;
+            const auto text_y = GetScreenHeight() * 0.5f;
+            const std::string winMessage = "SCORE: 5000";
+            DrawText(winMessage.c_str(), text_x, text_y, 64, WHITE);
+
+            EndDrawing();
 
         }break;
         }
