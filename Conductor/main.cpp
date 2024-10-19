@@ -80,7 +80,7 @@ int main(void)
 
         const auto text_x = GetScreenWidth() * 0.6;
         const auto text_y = GetScreenHeight() * 0.1;
-        DrawText(TextFormat("POINTS: %i", level.score()), text_x, text_y, 64, WHITE);
+        DrawText(TextFormat("POINTS: %i", level->score()), text_x, text_y, 64, WHITE);
         DrawFPS(100, 100);
 
         EndDrawing();

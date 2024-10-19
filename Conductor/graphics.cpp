@@ -66,13 +66,28 @@ void Graphics::drawRenderTexture(Track& track)
 	
 }
 
+
 void Graphics::renderTrack()
 {
-	Vector3 pos = { 1.8f, 0.3f, 0.3f };
-	Vector3 rax = { 0.970f, 0.0f, 0.0242f };
+	// demo code to find a good orientation for track plane
+	//if (IsKeyDown(KEY_M)) angle += 1.0f;
+	//if (IsKeyDown(KEY_N)) angle -= 1.0f;
+	//if (IsKeyDown(KEY_LEFT)) rax.x += 0.005f;
+	//if (IsKeyDown(KEY_RIGHT)) rax.x -= 0.005f;
+	//if (IsKeyDown(KEY_UP)) rax.y += .005f;
+	//if (IsKeyDown(KEY_DOWN)) rax.y -= .005f;
+	//if (IsKeyDown(KEY_O)) rax.z += .005f;
+	//if (IsKeyDown(KEY_L)) rax.z -= .005f;
+
+	Vector3 pos = { 0.8f, -2.25f, 0.1f };
+	Vector3 rax = { 0.93099f, -0.365046f, 0.0f };
+	float angle = 180.0f;
+	//rax = Vector3Normalize(rax);
+	//std::cout << rax.x << " : " << rax.y << " : " << rax.z << "\n";
+
 	Vector3 size = { 1.0f, 1.0f, 1.0f };
 
-	DrawModelEx(m_track_plane, pos, rax, 185.539f, size, WHITE);
+	DrawModelEx(m_track_plane, pos, rax, angle, size, WHITE);
 }
 
 
