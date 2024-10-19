@@ -28,4 +28,5 @@ private:
 	static bool m_conductor_baton_prev;
 
 	static float m_tick_time;
+	static float m_shake_multiplier;
 };

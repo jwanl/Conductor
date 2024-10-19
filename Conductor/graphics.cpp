@@ -9,6 +9,7 @@ int Graphics::m_conductor_anim_phase;
 int Graphics::m_conductor_anim_target;
 bool Graphics::m_conductor_baton_prev;
 float Graphics::m_tick_time;
+float Graphics::m_shake_multiplier;
 
 void Graphics::init(const char* backgroundTexture, std::vector<std::string> conductorSprites)
 {
@@ -27,6 +28,7 @@ void Graphics::init(const char* backgroundTexture, std::vector<std::string> cond
 
 	m_conductor_anim_phase = 0;
 	m_conductor_anim_target = 0;
+	m_shake_multiplier = 2.0f;
 	m_conductor_baton_prev = false;
 	m_tick_time = 0.0f;
 }
@@ -71,6 +73,7 @@ void Graphics::drawHitLine(Level& level)
 	else if (level.getMiss())
 	{
 		DrawRectangle(0, 0, 2, 64, ColorAlpha(RED, 0.85f));
+		m_shake_multiplier = 2.0f;
 	}
 }
 
@@ -103,12 +106,12 @@ void Graphics::renderTrack()
 
 void Graphics::drawBackground()
 {
-	
-	/*const auto t = GetTime();
-	const auto dx = std::sin(t * 200) + std::cos(t * 17);
-	const auto dy = std::cos(t * 20) + std::sin(t * 150);
-	DrawTexture(m_background_tex, 10 * dx, 10 * dy, WHITE);*/
-	DrawTexture(m_background_tex, 0, 0, WHITE);
+	m_shake_multiplier = std::max(m_shake_multiplier - GetFrameTime(), 0.0f);
+	const auto t = GetTime();
+	const auto dx = (std::sin(t * 200) + std::sin(t * 17)) * m_shake_multiplier;
+	const auto dy = (std::sin(t * 20) + std::sin(t * 150)) * m_shake_multiplier;
+	DrawTexture(m_background_tex, 10 * dx, 10 * dy, WHITE);
+	//DrawTexture(m_background_tex, 0, 0, WHITE);
 }
 
 void Graphics::drawConductor(Level& level)
