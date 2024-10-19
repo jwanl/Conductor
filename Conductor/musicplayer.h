@@ -11,7 +11,8 @@ public:
 	MusicPlayer(const char* audio_file);
 
 	void play();
-
+	void set_volume(float vol);
+	void set_pan(float pan);
 	void update();
 
 	void start_effect();
