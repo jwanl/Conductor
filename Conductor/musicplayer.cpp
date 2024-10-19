@@ -54,6 +54,14 @@ void MusicTrack::start_effect() {
 }
 
 void MusicTrack::update() {
+	time_since_update += GetFrameTime();
+	
+	if (time_since_update < 0.2f) {
+		UpdateMusicStream(m_music);
+		return;
+	}
+
+	time_since_update = 0;
 	
 
 	if (effect_on) {
@@ -67,6 +75,7 @@ void MusicTrack::update() {
 			if (p < 0.1f) {
 				p = 0.1f;
 			}
+
 			SetMusicPitch(m_music, p);
 		}
 	}
@@ -80,6 +89,15 @@ void MusicTrack::update() {
 
 		pitch = 1.0f + error * 0.5f;
 
+		if (std::abs(error) > 0.001f) {
+			pitch = pitch > max_pitch ? max_pitch : pitch < min_pitch ? min_pitch : pitch;
+
+			SetMusicPitch(m_music, pitch);
+		}
+		
+
+		
+
 		/*if (error > 0.1f) {
 			pitch = 1.0f + e
 		}
@@ -88,13 +106,13 @@ void MusicTrack::update() {
 		}*/
 		
 
-		pitch = pitch > max_pitch ? max_pitch : pitch < min_pitch ? min_pitch : pitch;
-
-		SetMusicPitch(m_music, pitch);
+		
 
 		
 	}
+	
 	UpdateMusicStream(m_music);
+
 	
 }
 

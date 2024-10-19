@@ -45,6 +45,8 @@ public:
 	const float max_len;
 
 	float music_start = 0;
+
+	float time_since_update = 0;
 };
 
 class MusicPlayer {

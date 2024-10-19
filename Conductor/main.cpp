@@ -21,7 +21,7 @@ int main(void)
     // Initialization
     const int screenWidth = 1280;
     const int screenHeight = 720;
-
+    
     InitWindow(screenWidth, screenHeight, "Super Conductor Bros");
 
     SetTargetFPS(30);               // Set our game to run at 60 frames-per-second
@@ -29,9 +29,9 @@ int main(void)
     InitAudioDevice();
 
     const char* level_musics[] = {
-        "../resources/rwbk.mp3",
-        "../resources/music.wav",
-        "../resources/rick.wav",
+        "../resources/rwbk.wav",
+        "../resources/music.mp3",
+        "../resources/rick.mp3",
     };
     //const char* music = "../resources/rwbk.mp3";
     

@@ -31,4 +31,6 @@ private:
 	bool m_hit_flag;
 	bool m_miss_flag;
 	bool m_over_flag;
+
+
 };
