@@ -23,11 +23,16 @@ int main(void)
 
     InitWindow(screenWidth, screenHeight, "Super Conductor Bros");
 
-    SetTargetFPS(30);               // Set our game to run at 60 frames-per-second
+    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
     InitAudioDevice();
     const char* music = "../resources/rwbk.wav";
     
+    MusicPlayer menuplayer("../resources/rick.wav", 2.0f, 0.01f, 5.0f);
+    
+
+    menuplayer.play();
+    menuplayer.set_volume(0.05f);
 
     //ToggleFullscreen();
   
@@ -45,7 +50,7 @@ int main(void)
     Graphics::init("../resources/background.png", 
         {"../resources/conductor_0.png", "../resources/conductor_1.png", "../resources/conductor_2.png"});
 
-
+    float t0 = GetTime();
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
@@ -53,10 +58,18 @@ int main(void)
         case GameState::MainMenu: {
             BeginDrawing();
 
+            const auto t = GetTime();
+            if ((t - t0) > 8.0f) {
+                t0 = t;
+                menuplayer.start_effect();
+            }
+
+            menuplayer.update();
+
             Color col;
-            col.g = 255.0f * (std::sin(GetTime() * 2.3f) * 0.5f + 0.5f);
-            col.b = 255.0f * (std::sin(GetTime() * 1.8f) * 0.5f + 0.5f);
-            col.r = 255.0f * (std::sin(GetTime() * 1.31f) * 0.5f + 0.5f);
+            col.g = 255.0f * (std::sin(GetTime() * 1.3f) * 0.5f + 0.5f);
+            col.b = 255.0f * (std::sin(GetTime() * 0.8f) * 0.5f + 0.5f);
+            col.r = 255.0f * (std::sin(GetTime() * 0.31f) * 0.5f + 0.5f);
             col.a = 255;
 
 
@@ -100,10 +113,10 @@ int main(void)
 
             Graphics::drawConductor(*level);
 
-            const auto text_x = GetScreenWidth() * 0.6;
-            const auto text_y = GetScreenHeight() * 0.1;
+            const auto text_x = GetScreenWidth() * 0.7;
+            const auto text_y = GetScreenHeight() * 0.0f;
             DrawText(TextFormat("POINTS: %i", level->score()), text_x, text_y, 64,WHITE);
-            DrawFPS(100, 100);
+            DrawFPS(0, 0);
 
             EndDrawing();
         }break;
