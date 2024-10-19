@@ -29,4 +29,6 @@ private:
 
 	static float m_tick_time;
 	static float m_shake_multiplier;
+	static float m_hit_timer;
+	static bool m_prev_hit;
 };

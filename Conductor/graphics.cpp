@@ -10,6 +10,8 @@ int Graphics::m_conductor_anim_target;
 bool Graphics::m_conductor_baton_prev;
 float Graphics::m_tick_time;
 float Graphics::m_shake_multiplier;
+float Graphics::m_hit_timer;
+bool Graphics::m_prev_hit;
 
 void Graphics::init(const char* backgroundTexture, std::vector<std::string> conductorSprites)
 {
@@ -28,9 +30,11 @@ void Graphics::init(const char* backgroundTexture, std::vector<std::string> cond
 
 	m_conductor_anim_phase = 0;
 	m_conductor_anim_target = 0;
-	m_shake_multiplier = 0.0f;
 	m_conductor_baton_prev = false;
 	m_tick_time = 0.0f;
+	m_shake_multiplier = 0.0f;
+	m_hit_timer = 0.0f;
+	m_prev_hit = false;
 }
 
 RenderTexture2D& Graphics::getTrackRenderTexture()
@@ -66,15 +70,25 @@ void Graphics::drawRenderTexture(Track& track)
 
 void Graphics::drawHitLine(Level& level)
 {
+	m_shake_multiplier = std::max(m_shake_multiplier - GetFrameTime(), 0.0f);
+	m_hit_timer = std::max(m_hit_timer - GetFrameTime(), 0.0f);
+
 	if (level.getHit()) 
 	{
-		DrawRectangle(0, 0, 2, 64, ColorAlpha(GREEN, 0.85f));
+		m_hit_timer = 0.8f;
+		m_prev_hit = true;
 	}
 	else if (level.getMiss())
 	{
-		DrawRectangle(0, 0, 2, 64, ColorAlpha(RED, 0.85f));
 		m_shake_multiplier = 2.0f;
+		m_hit_timer = 0.8f;
+		m_prev_hit = false;
 	}
+
+	if (!m_prev_hit)
+		DrawRectangle(0, 0, 2, 64, ColorAlpha(RED, 0.85f * m_hit_timer));
+	else
+		DrawRectangle(0, 0, 2, 64, ColorAlpha(GREEN, 0.85f * m_hit_timer));
 }
 
 
@@ -106,11 +120,10 @@ void Graphics::renderTrack()
 
 void Graphics::drawBackground()
 {
-	m_shake_multiplier = std::max(m_shake_multiplier - GetFrameTime(), 0.0f);
-	const auto t = GetTime();
-	const auto dx = (std::sin(t * 200) + std::sin(t * 17)) * m_shake_multiplier;
-	const auto dy = (std::sin(t * 20) + std::sin(t * 150)) * m_shake_multiplier;
-	DrawTexture(m_background_tex, 10 * dx, 10 * dy, WHITE);
+	const float t = (float)GetTime();
+	const float dx = (std::sin(t * 200.0f) + std::sin(t * 17.0f)) * m_shake_multiplier;
+	const float dy = (std::sin(t * 20.0f) + std::sin(t * 150.0f)) * m_shake_multiplier;
+	DrawTextureV(m_background_tex, { 10 * dx, 10 * dy }, WHITE);
 	//DrawTexture(m_background_tex, 0, 0, WHITE);
 }
 
