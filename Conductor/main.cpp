@@ -45,7 +45,6 @@ int main(void)
     Graphics::init("../resources/background.png", 
         {"../resources/conductor_0.png", "../resources/conductor_1.png", "../resources/conductor_2.png"});
 
-    //level->play();
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -115,7 +114,7 @@ int main(void)
 
         
 
-        
+
     }
 
     // De-Initialization
