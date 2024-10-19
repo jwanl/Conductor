@@ -1,5 +1,6 @@
 #include "graphics.h"
 #include <cmath>
+#include <iostream>
 Model Graphics::m_track_plane;
 RenderTexture2D Graphics::m_track_plane_tex;
 Texture2D Graphics::m_background_tex;
@@ -22,14 +23,31 @@ RenderTexture2D& Graphics::getTrackRenderTexture()
 /* Draws to track render texture. Remember to change drawing mode first and after */
 void Graphics::drawRenderTexture(Track& track)
 {
-	ClearBackground(ColorAlpha(WHITE, 0.0f));
+	ClearBackground(ColorAlpha(WHITE, 0.4f));
 	
 	auto sub = track.getNextValues();
 	double leftSide = track.getTime();
-	for (Vector2& item : sub)
-	{
-		DrawCircle((item.x - leftSide) * 128, item.y * 64 + 32, 8, BLUE);
+
+	for (int i = 0; i < 4; i++) {
+		const auto y = i * 64 / 4;
+		DrawLine(0, y, 511, y, ColorAlpha(BLACK, 0.8f));
 	}
+	DrawLine(0, 63, 511, 63, ColorAlpha(BLACK, 0.8f));
+
+	for (const auto& item : sub)
+	{
+		
+		const auto& tex = track.m_objects[item.i];
+		//DrawTextureEx(tex, { (item.x - (float)leftSide) * 128.0f, item.y * 64.0f + 32.0f }, 180.0f, 1.0f, WHITE);
+		DrawTextureRec(tex, Rectangle{ 0, 0  , (float)tex.width, -(float)tex.height }, { (item.x - (float)leftSide) * 128.0f, item.y * 64.0f + 32.0f }, GREEN);
+		//DrawTexture(tex, (item.x - leftSide) * 128, item.y * 64 + 32, WHITE);
+		//DrawCircle((item.x - leftSide) * 128, item.y * 64 + 32, 8, BLUE);
+
+
+	}
+
+	
+	
 }
 
 void Graphics::renderTrack()

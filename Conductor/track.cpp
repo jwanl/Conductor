@@ -7,12 +7,31 @@ Track::Track(float track_time)
 	m_time = 0.0;
 	m_random = Random();
 	//m_track_data = { track1_data };
-	const auto N = (int)(track_time * 2.5);
+	const auto N = (int)(track_time * 1.5);
+
+	m_objects.push_back(LoadTexture("../resources/avain.png"));
+	m_objects.push_back(LoadTexture("../resources/avain2.png"));
+	m_objects.push_back(LoadTexture("../resources/break.png"));
+	m_objects.push_back(LoadTexture("../resources/csharp.png"));
+	m_objects.push_back(LoadTexture("../resources/double.png"));
+	m_objects.push_back(LoadTexture("../resources/ff.png"));
+	m_objects.push_back(LoadTexture("../resources/flat.png"));
+	m_objects.push_back(LoadTexture("../resources/nuotti.png"));
+	m_objects.push_back(LoadTexture("../resources/nuotti2.png"));
+	m_objects.push_back(LoadTexture("../resources/sharp.png"));
+	m_objects.push_back(LoadTexture("../resources/cpp.png"));
+	m_objects.push_back(LoadTexture("../resources/dx.png"));
+	m_objects.push_back(LoadTexture("../resources/dolla.png"));
+	m_objects.push_back(LoadTexture("../resources/nabla.png"));
 
 	for (int i = 0; i < N; i++) {
-		m_track_data.push_back(Vector2{ m_random.get() * track_time + 7, m_random.get() * 0.8f - 0.4f });
+		TrackObject obj;
+		obj.x = m_random.get() * track_time + 7;
+		obj.y = m_random.get() * 0.8f - 0.4f;
+		obj.i = (int)(m_random.get() * (m_objects.size() - 1));
+		m_track_data.push_back(obj);
 	}
-	std::sort(m_track_data.begin(), m_track_data.end(), [](Vector2 a, Vector2 b) { return a.x < b.x; });
+	std::sort(m_track_data.begin(), m_track_data.end(), [](TrackObject& a, TrackObject& b) { return a.x < b.x; });
 }
 
 void Track::update(float frameTime)
@@ -37,11 +56,11 @@ bool Track::isOver()
 	return m_step >= m_track_data.size();
 }
 
-const std::vector<Vector2> Track::getNextValues() const
+const std::vector<TrackObject> Track::getNextValues() const
 {
 	auto start = m_step < 3 ? m_track_data.begin() + m_step : m_track_data.begin() + m_step - 3;
-	auto end = std::find_if(start, m_track_data.end(), [&](Vector2 a) { return a.x >= m_time + m_window; });
+	auto end = std::find_if(start, m_track_data.end(), [&](const TrackObject& a) { return a.x >= m_time + m_window; });
 	
-	std::vector<Vector2> sub(start, end);
+	std::vector<TrackObject> sub(start, end);
 	return sub;
 }

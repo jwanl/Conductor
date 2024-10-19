@@ -16,7 +16,7 @@ int main(void)
     const int screenWidth = 1280;
     const int screenHeight = 720;
 
-    InitWindow(screenWidth, screenHeight, "Conductor game");
+    InitWindow(screenWidth, screenHeight, "Super Conductor Bros");
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
@@ -25,21 +25,10 @@ int main(void)
     
 
 
-    /*auto img = LoadImage("../resources/avain.png");
     
-    for (int i = 0; i < img.height; i++) {
-        for (int j = 0; j < img.width; j++) {
-             auto p = GetImageColor(img, j, i);
-             if (p.r == 0) {
-                p.a = 0;
-                ImageDrawPixel(&img, j, i, p);
-             }
-        }
-    }*/
-
     ToggleFullscreen();
 
-    
+  
 
     Level level(music);
 
