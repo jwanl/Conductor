@@ -57,7 +57,7 @@ void Level::update()
 	m_hit_flag = false;
 	m_miss_flag = false;
 
-	if (leftSide >= m_track.getLength() + 1.0f)
+	if (leftSide >= m_track.getLength() + 1.0f || IsKeyDown(KEY_P))
 	{
 		// set over flag and return: input is not longer registered after this
 		m_over_flag = true;

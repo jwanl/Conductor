@@ -41,6 +41,7 @@ int main(void)
     menuplayer.set_volume(0.05f);
 
     Level* level = nullptr;
+    int lastScore = 0;
 
     int level_selected = 0;
     float time_out = 8.0f;
@@ -132,9 +133,6 @@ int main(void)
         case GameState::Level: {
             level->update();
 
-            if (level->isOver()) {
-                // Win screen here
-            }
 
             // Pre-draw: Render to texture
             BeginTextureMode(Graphics::getTrackRenderTexture());
@@ -162,6 +160,13 @@ int main(void)
             DrawFPS(0, 0);
 
             EndDrawing();
+
+            if (level->isOver()) {
+                // Win screen here
+                lastScore = level->score();
+                state = GameState::WinScreen;
+                delete level;
+            }
         }break;
         case GameState::WinScreen: {
 
@@ -170,8 +175,7 @@ int main(void)
             
             const auto text_x = GetScreenWidth() * 0.5f - 6 * 36;
             const auto text_y = GetScreenHeight() * 0.5f;
-            const std::string winMessage = "SCORE: 5000";
-            DrawText(winMessage.c_str(), text_x, text_y, 64, WHITE);
+            DrawText(TextFormat("SCORE: %i", lastScore), text_x, text_y, 64, WHITE);
 
             EndDrawing();
 
@@ -180,7 +184,6 @@ int main(void)
 
     }
 
-    delete level;
     menuplayer.unload();
 
     CloseAudioDevice();
