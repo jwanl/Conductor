@@ -82,6 +82,6 @@ void Level::update()
 
 
 	if (!m_player.is_playing()) {
-		std::cout << "Over\n";
+		m_over_flag = true;
 	}
 }
