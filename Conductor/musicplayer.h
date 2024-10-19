@@ -20,6 +20,12 @@ private:
 	std::mt19937 m_rng;
 	
 	Music m_music;
-	float strength;
-	float freq, mult;
+	
+	bool effect_on = false;
+	float start = 0;
+	float length = 0;
+	float pitch = 0;
+	float freq = 0;
+
+	float music_start = 0;
 };

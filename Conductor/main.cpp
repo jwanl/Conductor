@@ -24,13 +24,11 @@ int main(void)
     InitAudioDevice();
 
     //ToggleFullscreen();
-
-    MusicPlayer player("../resources/music.wav");
-    MusicPlayer player2("../resources/music.wav");
+    MusicPlayer player("../resources/rwbk.wav");
+    MusicPlayer player2("../resources/rwbk.wav");
 
     player.play();
     player2.play();
-
     
 
     Level level;
