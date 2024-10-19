@@ -15,6 +15,8 @@ enum class GameState {
 
 int main(void)
 {
+
+    SetTraceLogLevel(LOG_TRACE);
     GameState state = GameState::MainMenu;
 
     // Initialization
@@ -23,10 +25,10 @@ int main(void)
 
     InitWindow(screenWidth, screenHeight, "Super Conductor Bros");
 
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+    SetTargetFPS(240);               // Set our game to run at 60 frames-per-second
 
     InitAudioDevice();
-    const char* music = "../resources/rwbk.wav";
+    const char* music = "../resources/rwbk.mp3";
     
     MusicPlayer menuplayer("../resources/rick.wav", 2.0f, 0.01f, 5.0f);
     
@@ -87,6 +89,8 @@ int main(void)
                 state = GameState::Level;
                 level = new Level(music);
                 level->play();
+                menuplayer.stop();
+                //menuplayer.unload();
             }
 
             EndDrawing();
@@ -131,9 +135,15 @@ int main(void)
 
     }
 
+    delete level;
+    menuplayer.unload();
+
+    CloseAudioDevice();
+
     // De-Initialization
     CloseWindow();        // Close window and OpenGL context
 
-    delete level;
+
+
     return 0;
 }

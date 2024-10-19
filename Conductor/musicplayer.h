@@ -14,11 +14,22 @@ public:
 	MusicTrack(const char* audio_file, float max_len, float pitch_deviation, float max_freq);
 
 	void play();
+	void stop();
+
+	inline void unload() {
+		UnloadMusicStream(m_music);
+	}
+
 	void set_volume(float vol);
 	void set_pan(float pan);
 	void update();
 
 	void start_effect();
+
+	inline bool is_playing() const {
+		return (GetTime() - music_start) < GetMusicTimeLength(m_music);
+	}
+
 //private:
 	Random m_random;
 	Music m_music;
@@ -41,16 +52,25 @@ public:
 	MusicPlayer(const char* audio_file, float max_len, float pitch_deviation, float max_freq);
 
 	void play();
+	void stop();
 	void update();
 	void start_effect();
 	inline void set_volume(float vol) { 
 		m1.set_volume(vol);
-		m2.set_volume(vol);
 		m3.set_volume(vol);
+	}
+
+	inline bool is_playing() const {
+		return m1.is_playing();
+	}
+
+	inline void unload() {
+		m1.unload();
+		m3.unload();
 	}
 
 	float length() const;
 
 	//private:
-	MusicTrack m1, m2, m3;
+	MusicTrack m1, m3;
 };

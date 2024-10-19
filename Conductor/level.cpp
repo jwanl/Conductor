@@ -3,11 +3,16 @@
 #include <iostream>
 
 
-Level::Level(const char* audio_file) : m_player(MusicPlayer(audio_file, 3.0f, 0.2f, 150.0f)), m_track(m_player.length())
+Level::Level(const char* audio_file) : m_player(MusicPlayer(audio_file, 4.0f, 0.3f, 200.0f)), m_track(m_player.length())
 {
 	m_time_in_seconds = 0.0;
 	m_current_interval_time = 0.0f;
 	m_baton_up = false;
+}
+
+Level::~Level()
+{
+	m_player.unload();
 }
 
 Track& Level::getTrack() { return m_track; }
@@ -67,11 +72,13 @@ void Level::update()
 			m_player.start_effect();
 			m_miss_flag = true;
 		}
-		std::cout << m_score << "\n";
 	}
 
 	
 	m_baton_up = IsKeyDown(KEY_SPACE);
 
-	
+
+	if (!m_player.is_playing()) {
+		std::cout << "Over\n";
+	}
 }

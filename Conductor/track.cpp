@@ -27,7 +27,7 @@ Track::Track(float track_time)
 
 	for (int i = 0; i < N; i++) {
 		TrackObject obj;
-		obj.x = m_random.get() * track_time + 7;
+		obj.x = m_random.get() * track_time + 5;
 		obj.y = m_random.get() * 0.7f - 0.4f;
 		obj.i = (int)(m_random.get() * (m_objects.size() - 1));
 		m_track_data.push_back(obj);
