@@ -22,12 +22,31 @@ int main(void)
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
     InitAudioDevice();
+    const char* music = "../resources/rwbk.wav";
+    MusicPlayer player(music);
+    MusicPlayer player2(music);
+    MusicPlayer player3(music);
+    //MusicPlayer player4("../resources/rwbk.wav");
 
-    MusicPlayer player("../resources/rwbk.wav");
-    MusicPlayer player2("../resources/rwbk.wav");
+    auto img = LoadImage("../resources/avain.png");
+    
+    for (int i = 0; i < img.height; i++) {
+        for (int j = 0; j < img.width; j++) {
+             auto p = GetImageColor(img, j, i);
+             if (p.r == 0) {
+                p.a = 0;
+                ImageDrawPixel(&img, j, i, p);
+             }
+        }
+    }
 
     player.play();
     player2.play();
+    player3.play();
+    //player4.play();
+
+    player.set_volume(0.5f);
+    //player4.set_volume(0.3f);
     
 
     Level level;
@@ -52,14 +71,19 @@ int main(void)
         BeginTextureMode(Graphics::getTrackRenderTexture());
         Graphics::drawRenderTexture(level.getTrack());
         EndTextureMode();
-
+        if (IsKeyPressed(KEY_SPACE)) {
+            player2.start_effect();
+            player3.start_effect();
+        }
 
         player.update();
         player2.update();
+        player3.update();
 
-        if (IsKeyPressed(KEY_SPACE)) {
-            player.start_effect();
-        }
+        player3.set_pan(std::sin(GetTime()) * 0.5f + 0.5f);
+        //player4.update();
+
+       
 
         // Draw
         BeginDrawing();
