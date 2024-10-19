@@ -10,6 +10,7 @@ Level::Level(const char* audio_file) : m_player(MusicPlayer(audio_file, 3.0f, 0.
 	m_baton_up = false;
 	m_hit_flag = false;
 	m_miss_flag = false;
+	m_over_flag = false;
 }
 
 Track& Level::getTrack() { return m_track; }
@@ -41,22 +42,22 @@ void Level::update()
 	num = 0;
 	for (const auto& item : sub)
 	{
-		const auto dt = (item.x - m_track.m_time);
+		const auto dt = (item.x - leftSide);
 		if (dt >= -window && dt <= window) {
 			num += 1;
 		}
-		const auto& tex = m_track.m_objects[item.i];
-		//DrawTextureEx(tex, { (item.x - (float)leftSide) * 128.0f, item.y * 64.0f + 32.0f }, 180.0f, 1.0f, WHITE);
-		DrawTextureRec(tex, Rectangle{ 0, 0  , (float)tex.width, -(float)tex.height }, { (item.x - (float)leftSide) * 128.0f, item.y * 64.0f + 32.0f }, GREEN);
-		//DrawTexture(tex, (item.x - leftSide) * 128, item.y * 64 + 32, WHITE);
-		//DrawCircle((item.x - leftSide) * 128, item.y * 64 + 32, 8, BLUE);
-
-
 	}
 
 	
 	m_hit_flag = false;
 	m_miss_flag = false;
+
+	if (leftSide >= m_track.getLength() + 1.0f)
+	{
+		// set over flag and return: input is not longer registered after this
+		m_over_flag = true;
+		return;
+	}
 
 	if (IsKeyPressed(KEY_SPACE)) {
 		if (num > 0) {

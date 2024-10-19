@@ -20,12 +20,14 @@ public:
 	const std::vector<TrackObject> getNextValues() const;
 	float getWindow() const;
 	double getTime() const;
-//private:
-	std::size_t m_step = 0;
-	double m_time = 0.0;
-	std::vector<TrackObject> m_track_data;
-	float m_window = 8.0f;
-	Random m_random;
+	float getLength() const { return m_track_length; }
 
 	std::vector<Texture2D> m_objects;
+private:
+	std::size_t m_step;
+	double m_time;
+	std::vector<TrackObject> m_track_data;
+	float m_window;
+	Random m_random;
+	float m_track_length;
 };

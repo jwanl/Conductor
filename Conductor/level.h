@@ -18,6 +18,7 @@ public:
 	int score() const;
 	bool getHit() const { return m_hit_flag; }
 	bool getMiss() const { return m_miss_flag; }
+	bool isOver() const { return m_over_flag; };
 private:
 
 	int m_score = 0;
@@ -28,4 +29,5 @@ private:
 	bool m_baton_up;
 	bool m_hit_flag;
 	bool m_miss_flag;
+	bool m_over_flag;
 };

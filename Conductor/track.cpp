@@ -3,6 +3,7 @@
 
 Track::Track(float track_time) 
 {
+	m_track_length = track_time;
 	m_window = 5.0f;
 	m_step = 0;
 	m_time = 0.0;

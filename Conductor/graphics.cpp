@@ -120,10 +120,10 @@ void Graphics::renderTrack()
 
 void Graphics::drawBackground()
 {
-	const auto t = GetTime();
-	const auto dx = (std::sin(t * 200) + std::sin(t * 17)) * m_shake_multiplier;
-	const auto dy = (std::sin(t * 20) + std::sin(t * 150)) * m_shake_multiplier;
-	DrawTexture(m_background_tex, 10 * dx, 10 * dy, WHITE);
+	const float t = (float)GetTime();
+	const float dx = (std::sin(t * 200.0f) + std::sin(t * 17.0f)) * m_shake_multiplier;
+	const float dy = (std::sin(t * 20.0f) + std::sin(t * 150.0f)) * m_shake_multiplier;
+	DrawTextureV(m_background_tex, { 10 * dx, 10 * dy }, WHITE);
 	//DrawTexture(m_background_tex, 0, 0, WHITE);
 }
 
