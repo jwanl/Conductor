@@ -9,7 +9,7 @@ Track::Track(float track_time)
 	m_time = 0.0;
 	m_random = Random();
 	//m_track_data = { track1_data };
-	const auto N = (int)(track_time * 3.0f);
+	const auto N = (int)(track_time * 20.0f);
 
 	m_objects.push_back(LoadTexture("../resources/avain.png"));
 	m_objects.push_back(LoadTexture("../resources/avain2.png"));
@@ -28,7 +28,7 @@ Track::Track(float track_time)
 
 	for (int i = 0; i < N; i++) {
 		TrackObject obj;
-		obj.x = m_random.get() * track_time + 5;
+		obj.x = m_random.get() * 5 * track_time + 5;
 		obj.y = m_random.get() * 0.7f - 0.4f;
 		obj.i = (int)(m_random.get() * (m_objects.size() - 1));
 		m_track_data.push_back(obj);
@@ -62,6 +62,8 @@ const std::vector<TrackObject> Track::getNextValues() const
 {
 	auto start = m_step < 3 ? m_track_data.begin() + m_step : m_track_data.begin() + m_step - 3;
 	auto end = std::find_if(start, m_track_data.end(), [&](const TrackObject& a) { return a.x >= m_time + m_window; });
+
+
 	
 	std::vector<TrackObject> sub(start, end);
 	return sub;
