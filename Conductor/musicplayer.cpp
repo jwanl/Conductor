@@ -46,6 +46,8 @@ void MusicTrack::start_effect() {
 }
 
 void MusicTrack::update() {
+	UpdateMusicStream(m_music);
+
 	if (effect_on) {
 		const auto t = GetTime() - start;
 		if (t > length) {
@@ -82,7 +84,7 @@ void MusicTrack::update() {
 		
 	}
 
-	UpdateMusicStream(m_music);
+	
 }
 
 MusicPlayer::MusicPlayer(const char* audio_file) : m1(MusicTrack(audio_file)), m2(MusicTrack(audio_file)), m3(MusicTrack(audio_file))

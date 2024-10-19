@@ -1,5 +1,6 @@
 #include "track.h"
 
+
 Track::Track(float track_time) 
 {
 	m_window = 4.0f;
@@ -7,7 +8,7 @@ Track::Track(float track_time)
 	m_time = 0.0;
 	m_random = Random();
 	//m_track_data = { track1_data };
-	const auto N = (int)(track_time * 1.5);
+	const auto N = (int)(track_time * 3.0f);
 
 	m_objects.push_back(LoadTexture("../resources/avain.png"));
 	m_objects.push_back(LoadTexture("../resources/avain2.png"));

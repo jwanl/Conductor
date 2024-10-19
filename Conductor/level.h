@@ -15,7 +15,10 @@ public:
 	bool isBatonUp() const { return m_baton_up; }
 
 	void play();
+	int score() const;
 private:
+
+	int m_score = 0;
 	MusicPlayer m_player;
 	Track m_track;
 	double m_time_in_seconds;

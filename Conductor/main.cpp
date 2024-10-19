@@ -18,7 +18,7 @@ int main(void)
 
     InitWindow(screenWidth, screenHeight, "Super Conductor Bros");
 
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
+    SetTargetFPS(30);               // Set our game to run at 60 frames-per-second
 
     InitAudioDevice();
     const char* music = "../resources/rwbk.wav";
@@ -26,8 +26,9 @@ int main(void)
 
 
     
-    //ToggleFullscreen();
-
+    ToggleFullscreen();
+   
+   
   
 
     Level level(music);
@@ -76,6 +77,11 @@ int main(void)
         EndMode3D();
 
         Graphics::drawConductor(level);
+
+        const auto text_x = GetScreenWidth() * 0.6;
+        const auto text_y = GetScreenHeight() * 0.1;
+        DrawText(TextFormat("POINTS: %i", level.score()), text_x, text_y, 64, WHITE);
+        DrawFPS(100, 100);
 
         EndDrawing();
     }
