@@ -2,6 +2,7 @@
 
 #include "track.h"
 #include "raylib.h"
+#include "raymath.h"
 
 class Graphics {
 public:

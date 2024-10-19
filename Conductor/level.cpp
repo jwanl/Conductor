@@ -12,13 +12,5 @@ Track& Level::getTrack() { return m_track; }
 /** Called every frame. Updates track playing at every specified interval */
 void Level::update()
 {
-	float frameTime = GetFrameTime();
-	m_time_in_seconds += frameTime;
-	m_current_interval_time += frameTime;
-
-	if (m_current_interval_time >= INTERVAL_TIME)
-	{
-		m_current_interval_time -= INTERVAL_TIME;
-		m_track.advance();
-	}
+	m_track.update(GetFrameTime());
 }

@@ -14,14 +14,16 @@ int main(void)
     
 
     // Initialization
-    const int screenWidth = 1280;
-    const int screenHeight = 720;
+    const int screenWidth = 1920;
+    const int screenHeight = 1080;
 
     InitWindow(screenWidth, screenHeight, "Conductor game");
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
     InitAudioDevice();
+
+    //ToggleFullscreen();
 
     MusicPlayer player("../resources/music.wav");
     MusicPlayer player2("../resources/music.wav");
