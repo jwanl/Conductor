@@ -1,11 +1,17 @@
 #include "track.h"
 
-Track::Track() 
+Track::Track(float track_time) 
 {
 	m_window = 4.0f;
 	m_step = 0;
 	m_time = 0.0;
-	m_track_data = { track1_data };
+	m_random = Random();
+	//m_track_data = { track1_data };
+	const auto N = (int)(track_time * 2.5);
+
+	for (int i = 0; i < N; i++) {
+		m_track_data.push_back(Vector2{ m_random.get() * track_time + 7, m_random.get() * 0.8f - 0.4f });
+	}
 	std::sort(m_track_data.begin(), m_track_data.end(), [](Vector2 a, Vector2 b) { return a.x < b.x; });
 }
 

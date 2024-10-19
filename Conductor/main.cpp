@@ -1,6 +1,5 @@
 #include "raylib.h"
 #include "main.h"
-#include "musicplayer.h"
 
 #include "graphics.h"
 
@@ -23,10 +22,7 @@ int main(void)
 
     InitAudioDevice();
     const char* music = "../resources/rwbk.wav";
-    MusicPlayer player(music);
-    MusicPlayer player2(music);
-    MusicPlayer player3(music);
-    //MusicPlayer player4("../resources/rwbk.wav");
+    
 
 
     /*auto img = LoadImage("../resources/avain.png");
@@ -41,18 +37,14 @@ int main(void)
         }
     }*/
 
-    //ToggleFullscreen();
+    ToggleFullscreen();
 
-    player.play();
-    player2.play();
-    player3.play();
-    //player4.play();
-
-    player.set_volume(0.5f);
-    //player4.set_volume(0.3f);
     
 
-    Level level;
+    Level level(music);
+
+    
+
     Camera camera = { 0 };
     camera.position = { -3.0f, 0.0f, 0.0f };    // Camera position
     camera.target = { 0.0f, 0.0f, 0.0f };      // Camera looking at point
@@ -61,11 +53,13 @@ int main(void)
     camera.projection = CAMERA_PERSPECTIVE;             // Camera projection type
     Graphics::init("../resources/background.png");
 
+    level.play();
+
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
         // Update
-        std::cout << GetFPS() << "\n";
+        //std::cout << GetFPS() << "\n";
         // TODO: Update your variables here
 
         level.update();
@@ -74,17 +68,9 @@ int main(void)
         BeginTextureMode(Graphics::getTrackRenderTexture());
         Graphics::drawRenderTexture(level.getTrack());
         EndTextureMode();
-        if (IsKeyPressed(KEY_SPACE)) {
-            player2.start_effect();
-            player3.start_effect();
-        }
+        
+        
 
-        player.update();
-        player2.update();
-        player3.update();
-
-        player3.set_pan(std::sin(GetTime()) * 0.5f + 0.5f);
-        //player4.update();
 
        
 

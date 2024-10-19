@@ -1,5 +1,5 @@
 #include "graphics.h"
-
+#include <cmath>
 Model Graphics::m_track_plane;
 RenderTexture2D Graphics::m_track_plane_tex;
 Texture2D Graphics::m_background_tex;
@@ -41,7 +41,15 @@ void Graphics::renderTrack()
 	DrawModelEx(m_track_plane, pos, rax, 185.539f, size, WHITE);
 }
 
+
+
+
 void Graphics::drawBackground()
 {
+	
+	/*const auto t = GetTime();
+	const auto dx = std::sin(t * 200) + std::cos(t * 17);
+	const auto dy = std::cos(t * 20) + std::sin(t * 150);
+	DrawTexture(m_background_tex, 10 * dx, 10 * dy, WHITE);*/
 	DrawTexture(m_background_tex, 0, 0, WHITE);
 }
