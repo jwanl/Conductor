@@ -31,7 +31,7 @@ int main(void)
    
   
 
-    Level level(music);
+    Level* level = new Level(music);
 
     
 
@@ -44,7 +44,7 @@ int main(void)
     Graphics::init("../resources/background.png", 
         {"../resources/conductor_0.png", "../resources/conductor_1.png", "../resources/conductor_2.png"});
 
-    level.play();
+    level->play();
 
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -53,11 +53,11 @@ int main(void)
         //std::cout << GetFPS() << "\n";
         // TODO: Update your variables here
 
-        level.update();
+        level->update();
 
         // Pre-draw: Render to texture
         BeginTextureMode(Graphics::getTrackRenderTexture());
-        Graphics::drawRenderTexture(level.getTrack());
+        Graphics::drawRenderTexture(level->getTrack());
         EndTextureMode();
         
         
@@ -76,7 +76,7 @@ int main(void)
         Graphics::renderTrack();
         EndMode3D();
 
-        Graphics::drawConductor(level);
+        Graphics::drawConductor(*level);
 
         const auto text_x = GetScreenWidth() * 0.6;
         const auto text_y = GetScreenHeight() * 0.1;
@@ -89,5 +89,6 @@ int main(void)
     // De-Initialization
     CloseWindow();        // Close window and OpenGL context
 
+    delete level;
     return 0;
 }
