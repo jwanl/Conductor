@@ -4,7 +4,9 @@
 
 
 
-MusicTrack::MusicTrack(const char* audio_file) {
+MusicTrack::MusicTrack(const char* audio_file, float max_len, float pitch_deviation, float max_freq) :
+	max_len(max_len), pitch_deviation(pitch_deviation), max_freq(max_freq)
+{
 	m_random = Random();
 	m_music = LoadMusicStream(audio_file);
 	m_music.looping = false;
@@ -31,15 +33,14 @@ void MusicTrack::set_pan(float pan)
 
 void MusicTrack::start_effect() {
 
-	const auto max_length = 2.0f;
-	const auto max_freq = 150.0f;
+	
 
-	const auto max_pitch = 1.2f;
-	const auto min_pitch = 0.5f;
+	const auto max_pitch = 1.0f + pitch_deviation;
+	const auto min_pitch = 1.0f - pitch_deviation;
 
 	effect_on = true;
 	start = GetTime();
-	length = m_random.get() * max_length + 0.01f;
+	length = m_random.get() * max_len + 0.01f;
 	freq = m_random.get() * max_freq;
 
 	pitch = m_random.get() * (max_pitch - min_pitch) + min_pitch;
@@ -87,7 +88,10 @@ void MusicTrack::update() {
 	
 }
 
-MusicPlayer::MusicPlayer(const char* audio_file) : m1(MusicTrack(audio_file)), m2(MusicTrack(audio_file)), m3(MusicTrack(audio_file))
+MusicPlayer::MusicPlayer(const char* audio_file, float max_len, float pitch_deviation, float max_freq) :
+	m1(MusicTrack(audio_file, max_len, pitch_deviation, max_freq)),
+	m2(MusicTrack(audio_file, max_len, pitch_deviation, max_freq)),
+	m3(MusicTrack(audio_file, max_len, pitch_deviation, max_freq))
 {
 	m1.set_volume(0.6f);
 	m2.set_volume(0.5f);

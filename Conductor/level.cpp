@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-Level::Level(const char* audio_file) : m_player(MusicPlayer(audio_file)), m_track(m_player.length())
+Level::Level(const char* audio_file) : m_player(MusicPlayer(audio_file, 3.0f, 0.2f, 150.0f)), m_track(m_player.length())
 {
 	m_time_in_seconds = 0.0;
 	m_current_interval_time = 0.0f;
