@@ -53,15 +53,19 @@ void Level::update()
 	}
 
 	
+	m_hit_flag = false;
+	m_miss_flag = false;
 
 	if (IsKeyPressed(KEY_SPACE)) {
 		if (num > 0) {
 			num--;
 			m_score += 100;
+			m_hit_flag = true;
 		}
 		else {
 			m_score -= 250;
 			m_player.start_effect();
+			m_miss_flag = true;
 		}
 		std::cout << m_score << "\n";
 	}

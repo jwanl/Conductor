@@ -16,6 +16,7 @@ public:
 	static void drawBackground();
 	static void drawConductor(Level& level);
 	static bool updateAnimationTick();
+	static void drawHitLine(Level& level);
 private:
 	static Model m_track_plane;
 	static RenderTexture2D m_track_plane_tex;

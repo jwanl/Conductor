@@ -84,6 +84,7 @@ int main(void)
             // Pre-draw: Render to texture
             BeginTextureMode(Graphics::getTrackRenderTexture());
             Graphics::drawRenderTexture(level->getTrack());
+            Graphics::drawHitLine(*level);
             EndTextureMode();
 
 

@@ -57,13 +57,21 @@ void Graphics::drawRenderTexture(Track& track)
 		//DrawTextureEx(tex, { (item.x - (float)leftSide) * 128.0f, item.y * 64.0f + 32.0f }, 180.0f, 1.0f, WHITE);
 		DrawTextureRec(tex, Rectangle{ 0, 0  , (float)tex.width, -(float)tex.height }, { (item.x - (float)leftSide) * 128.0f, item.y * 64.0f + 32.0f }, GREEN);
 		//DrawTexture(tex, (item.x - leftSide) * 128, item.y * 64 + 32, WHITE);
-		//DrawCircle((item.x - leftSide) * 128, item.y * 64 + 32, 8, BLUE);
-
-
+		//DrawCircle((item.x - leftSide) * 128, item.y * 64 + 32, 8, BLUE);	
 	}
+	
+}
 
-	
-	
+void Graphics::drawHitLine(Level& level)
+{
+	if (level.getHit()) 
+	{
+		DrawRectangle(0, 0, 2, 64, ColorAlpha(GREEN, 0.85f));
+	}
+	else if (level.getMiss())
+	{
+		DrawRectangle(0, 0, 2, 64, ColorAlpha(RED, 0.85f));
+	}
 }
 
 
