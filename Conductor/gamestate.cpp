@@ -215,5 +215,10 @@ void MainMenu::draw() {
         DrawCenteredText(menu_items[i], font_size, color, 240 + i * 100);
 
     }
+
+    int credSpeed = 70;
+    DrawText("made by Samuel & Juha", (int)(GetTime() * credSpeed) % (GetRenderWidth() * 2) - GetRenderWidth(), GetRenderHeight() - 40, 40, color);
+    DrawText("made by Samuel & Juha", (int)(GetTime() * credSpeed + GetRenderWidth()) % (GetRenderWidth() * 2) - GetRenderWidth(), GetRenderHeight() - 40, 40, color);
+
     EndDrawing();
 }
