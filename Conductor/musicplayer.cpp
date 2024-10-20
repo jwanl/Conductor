@@ -124,6 +124,14 @@ MusicPlayer::MusicPlayer(const char* audio_file, float max_len, float pitch_devi
 	m3.set_volume(0.3f);
 }
 
+MusicPlayer::~MusicPlayer()
+{
+	m1.stop();
+	m3.stop();
+	//m1.unload();
+	//m3.unload();
+}
+
 void MusicPlayer::play()
 {
 	m1.play();

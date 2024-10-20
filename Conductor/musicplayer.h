@@ -53,6 +53,8 @@ class MusicPlayer {
 public:
 	MusicPlayer(const char* audio_file, float max_len, float pitch_deviation, float max_freq);
 
+	~MusicPlayer();
+
 	void play();
 	void stop();
 	void update();

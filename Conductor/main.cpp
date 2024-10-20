@@ -48,8 +48,9 @@ public:
     // Inherited via GameState
     std::unique_ptr<GameState> update() override
     {
-        return std::unique_ptr<GameState>();
+        return nullptr;
     }
+
     void draw() override
     {
     }
@@ -57,31 +58,32 @@ public:
 
 class LevelState : public GameState {
 public:
-    LevelState(const char* audio_file, int levelId) : m_level(new Level(audio_file, 10)), levelId(levelId) {
+    LevelState(const char* audio_file, int levelId) : m_level(Level(audio_file, 10)), levelId(levelId) {
         camera.position = { -3.0f, 0.0f, 0.0f };    // Camera position
         camera.target = { 0.0f, 0.0f, 0.0f };      // Camera looking at point
         camera.up = { 0.0f, 0.0f, 1.0f };          // Camera up vector (rotation towards target)
         camera.fovy = 45.0f;                                // Camera field-of-view Y
         camera.projection = CAMERA_PERSPECTIVE;             // Camera projection type
 
-        m_level->play();
+        m_level.play();
     }
 
-    ~LevelState() {
-        delete m_level;
-    }
+   
 
     // Inherited via GameState
     std::unique_ptr<GameState> update() override
     {
-        m_level->update();
+        
 
-        if (m_level->isOver()) {
+        if (m_level.isOver()) {
             // Win screen here
-            int score = m_level->score();
+            int score = m_level.score();
             return std::make_unique<WinScreen>(levelId, score);
         }
-        else return nullptr;
+        else {
+            m_level.update();
+            return nullptr;
+        }
     }
 
     void draw() override
@@ -91,8 +93,8 @@ public:
 
                 // Pre-draw: Render to texture
                 BeginTextureMode(Graphics::getTrackRenderTexture());
-                Graphics::drawRenderTexture(m_level->getTrack());
-                Graphics::drawHitLine(*m_level);
+                Graphics::drawRenderTexture(m_level.getTrack());
+                Graphics::drawHitLine(m_level);
                 EndTextureMode();
 
 
@@ -107,12 +109,12 @@ public:
                 Graphics::renderTrack();
                 EndMode3D();
 
-                Graphics::drawConductor(*m_level);
-                Graphics::drawProgressBar(m_level->getPercentageDone());
+                Graphics::drawConductor(m_level);
+                Graphics::drawProgressBar(m_level.getPercentageDone());
 
                 const auto text_x = GetScreenWidth() * 0.6;
                 const auto text_y = GetScreenHeight() * 0.0f;
-                DrawText(TextFormat("POINTS: %i", m_level->score()), text_x, text_y, 64,WHITE);
+                DrawText(TextFormat("POINTS: %i", m_level.score()), text_x, text_y, 64,WHITE);
                 DrawFPS(0, 0);
 
                 EndDrawing();
@@ -120,7 +122,7 @@ public:
 
 
 private:
-    Level* m_level = nullptr;
+    Level m_level;
     Camera camera;
     int levelId;
 
@@ -131,16 +133,22 @@ public:
     // Inherited via GameState
     std::unique_ptr<GameState> update() override
     {
+        if (!is_released) {
+            if (IsKeyReleased(KEY_SPACE)) {
+                is_released = true;
+            }
+            return nullptr;
+        }
         if (space_pressed > 1.0f) {
-            
+
             return std::make_unique<LevelState>(musics[selected], selected);
         }
-        else if (IsKeyReleased(KEY_SPACE)) {
-            if (space_pressed < 0.5f) {
-                selected = (selected + 1) % levels.size();
-            }
+        else if (space_pressed < 0.5f && space_pressed > 0.1f && !IsKeyDown(KEY_SPACE)) {
+
+            selected = (selected + 1) % levels.size();
             space_pressed = 0;
         }
+
 
         if (IsKeyDown(KEY_SPACE)) {
             space_pressed += GetFrameTime();
@@ -189,26 +197,29 @@ private:
         "../resources/music.mp3",
         "../resources/rick.mp3"
     };
+
+    bool is_released = false;
 };
 
 class MainMenu : public GameState {
 public:
     std::unique_ptr<GameState> update() override {
-        if (space_pressed > 1.5f) {
+        if (space_pressed > 1.0f) {
             if (selected == 0) {
                 return std::make_unique<LevelSelector>();
             }
             else if (selected == 1) {
                 m_should_close = true;
             }
-           
+
         }
-        else if (IsKeyReleased(KEY_SPACE)) {
-            if (space_pressed < 0.5f) {
-                selected = (selected + 1) % menu_items.size();
-            }
+        else if (space_pressed < 0.5f && space_pressed > 0.1f && !IsKeyDown(KEY_SPACE)) {
+            
+            selected = (selected + 1) % menu_items.size();
             space_pressed = 0;
         }
+        
+       
 
         if (IsKeyDown(KEY_SPACE)) {
             space_pressed += GetFrameTime();
@@ -293,10 +304,13 @@ int main(void)
     while (!WindowShouldClose() && !state->should_close()) {
         
         auto next_state = state->update();
-        state->draw();
+       
 
         if (next_state) {
             state = std::move(next_state);
+        }
+        else {
+            state->draw();
         }
 
     }
