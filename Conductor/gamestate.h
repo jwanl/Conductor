@@ -56,7 +56,7 @@ public:
 private:
     float space_pressed = 0.0f;
     int selected = 0;
-    std::vector<std::string> levels = {
+    const char* levels[3] = {
         "level 1",
         "level 2",
         "level 3",
@@ -66,6 +66,7 @@ private:
         "../resources/music.mp3",
         "../resources/rick.mp3"
     };
+    float is_released = false;
 };
 
 class MainMenu : public GameState {

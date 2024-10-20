@@ -14,10 +14,6 @@ Level::Level(const char* audio_file, int length) : m_player(MusicPlayer(audio_fi
 	m_over_flag = false;
 }
 
-Level::~Level()
-{
-	m_player.unload();
-}
 
 Track& Level::getTrack() { return m_track; }
 

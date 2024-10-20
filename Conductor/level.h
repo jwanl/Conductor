@@ -9,7 +9,6 @@ class Level
 {
 public:
 	Level(const char* audio_file, int length);
-	~Level();
 	void update();
 	Track& getTrack();
 	bool isBatonUp() const { return m_baton_up; }
