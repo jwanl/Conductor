@@ -34,7 +34,7 @@ int Level::score() const
 /** Called every frame. Updates track playing at every specified interval */
 void Level::update()
 {
-	m_player.update();
+  	m_player.update();
 	m_track.update(GetFrameTime());
 	m_time_in_seconds += GetFrameTime();
 
