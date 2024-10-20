@@ -57,7 +57,7 @@ public:
 
 class LevelState : public GameState {
 public:
-    LevelState(const char* audio_file, int levelId) : m_level(new Level(audio_file)), levelId(levelId) {
+    LevelState(const char* audio_file, int levelId) : m_level(new Level(audio_file, 10)), levelId(levelId) {
         camera.position = { -3.0f, 0.0f, 0.0f };    // Camera position
         camera.target = { 0.0f, 0.0f, 0.0f };      // Camera looking at point
         camera.up = { 0.0f, 0.0f, 1.0f };          // Camera up vector (rotation towards target)
@@ -75,7 +75,13 @@ public:
     std::unique_ptr<GameState> update() override
     {
         m_level->update();
-        return nullptr;
+
+        if (m_level->isOver()) {
+            // Win screen here
+            int score = m_level->score();
+            return std::make_unique<WinScreen>(levelId, score);
+        }
+        else return nullptr;
     }
 
     void draw() override
@@ -102,6 +108,7 @@ public:
                 EndMode3D();
 
                 Graphics::drawConductor(*m_level);
+                Graphics::drawProgressBar(m_level->getPercentageDone());
 
                 const auto text_x = GetScreenWidth() * 0.6;
                 const auto text_y = GetScreenHeight() * 0.0f;
@@ -109,13 +116,6 @@ public:
                 DrawFPS(0, 0);
 
                 EndDrawing();
-
-                if (m_level->isOver()) {
-                    // Win screen here
-                    /*lastScore = level->score();
-                    state = GameState::WinScreen;*/
-                    //delete level;
-                }
     }
 
 
@@ -133,7 +133,7 @@ public:
     {
         if (space_pressed > 1.0f) {
             
-            return std::make_unique<LevelState>(musics[selected]);
+            return std::make_unique<LevelState>(musics[selected], selected);
         }
         else if (IsKeyReleased(KEY_SPACE)) {
             if (space_pressed < 0.5f) {
