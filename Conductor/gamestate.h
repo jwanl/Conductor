@@ -65,7 +65,7 @@ private:
     };
     const char* musics[3] = {
         RES("rwbk.mp3"),
-        RES("music.mp3"),
+        RES("bizet.mp3"),
         RES("wagner.mp3"),
     };
     float is_released = false;
