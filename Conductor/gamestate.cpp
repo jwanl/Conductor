@@ -101,6 +101,13 @@ void LevelState::draw()
     Graphics::drawConductor(*m_level);
     Graphics::drawProgressBar(m_level->getPercentageDone());
 
+    if (getHighScore(0) == 0 && m_tooltipTimer >= 0.01f) {
+        m_tooltipTimer -= GetFrameTime();
+        float alpha = std::min(m_tooltipTimer / 2.0f, 1.0f);
+        DrawCenteredText("Press 'SPACE' to", 64.0f, ColorAlpha(BLACK, alpha), GetRenderHeight() * 0.3f);
+        DrawCenteredText("conduct the orchestra", 64.0f, ColorAlpha(BLACK, alpha), GetRenderHeight() * 0.45f);
+    }
+
     const auto text_x = GetScreenWidth() * 0.6;
     const auto text_y = GetScreenHeight() * 0.0f;
     DrawText(TextFormat("POINTS: %i", m_level->score()), text_x, text_y, 64, WHITE);

@@ -46,6 +46,7 @@ private:
     Level* m_level;
     Camera camera;
     int levelId;
+    float m_tooltipTimer = 3.0f;
 };
 
 class LevelSelector : public GameState {
