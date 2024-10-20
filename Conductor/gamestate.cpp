@@ -51,7 +51,7 @@ void WinScreen::draw()
 
 /* LEVEL STATE */
 
-LevelState::LevelState(const char* audio_file, int levelId) : m_level(new Level(audio_file, 15)), levelId(levelId) {
+LevelState::LevelState(const char* audio_file, int levelId) : m_level(new Level(audio_file, 120)), levelId(levelId) {
     camera.position = { -3.0f, 0.0f, 0.0f };    // Camera position
     camera.target = { 0.0f, 0.0f, 0.0f };      // Camera looking at point
     camera.up = { 0.0f, 0.0f, 1.0f };          // Camera up vector (rotation towards target)
@@ -100,6 +100,13 @@ void LevelState::draw()
 
     Graphics::drawConductor(*m_level);
     Graphics::drawProgressBar(m_level->getPercentageDone());
+
+    if (getHighScore(0) == 0 && m_tooltipTimer >= 0.01f) {
+        m_tooltipTimer -= GetFrameTime();
+        float alpha = std::min(m_tooltipTimer / 2.0f, 1.0f);
+        DrawCenteredText("Press 'SPACE' to", 64.0f, ColorAlpha(BLACK, alpha), GetRenderHeight() * 0.3f);
+        DrawCenteredText("conduct the orchestra", 64.0f, ColorAlpha(BLACK, alpha), GetRenderHeight() * 0.45f);
+    }
 
     const auto text_x = GetScreenWidth() * 0.6;
     const auto text_y = GetScreenHeight() * 0.0f;
