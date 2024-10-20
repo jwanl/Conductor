@@ -2,6 +2,16 @@
 
 #include <random>
 
+#ifdef NDEBUG
+
+#define RES(path) "resources/"  path
+#else
+
+#define RES(path) "../resources/"  path
+#endif
+
+
+
 class Random {
 public:
 	inline Random() {

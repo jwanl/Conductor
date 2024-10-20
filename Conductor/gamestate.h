@@ -2,6 +2,7 @@
 
 #include <memory>
 #include "raylib.h"
+#include "main.h"
 #include <string>
 #include "graphics.h"
 #include "highscore.h"
@@ -62,9 +63,9 @@ private:
         "level 3",
     };
     const char* musics[3] = {
-        "../resources/rwbk.mp3",
-        "../resources/music.mp3",
-        "../resources/rick.mp3"
+        RES("rwbk.mp3"),
+        RES("music.mp3"),
+        RES("rick.mp3"),
     };
     float is_released = false;
 };
