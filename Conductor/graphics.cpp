@@ -117,7 +117,7 @@ void Graphics::renderTrack()
 
 	Vector3 pos = { 0.8f, -2.25f, 0.1f };
 	Vector3 rax = { 0.93099f, -0.365046f, 0.0f };
-	float angle = 180.0f;
+	float angle = 180.0f + 0.5f * std::sin(GetTime() * 0.5f);
 	//rax = Vector3Normalize(rax);
 	//std::cout << rax.x << " : " << rax.y << " : " << rax.z << "\n";
 
