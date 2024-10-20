@@ -3,7 +3,7 @@
 #include <iostream>
 
 
-Level::Level(const char* audio_file, int length) : m_player(MusicPlayer(audio_file, 4.0f, 0.3f, 200.0f)), m_track(m_player.length())
+Level::Level(const char* audio_file, int length) : m_player(MusicPlayer(audio_file, 4.0f, 0.3f, 200.0f)), m_track(length)
 {
 	m_length = length;
 	m_time_in_seconds = 0.0;

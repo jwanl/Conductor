@@ -45,10 +45,12 @@ RenderTexture2D& Graphics::getTrackRenderTexture()
 /* Draws to track render texture. Remember to change drawing mode first and after */
 void Graphics::drawRenderTexture(Track& track)
 {
+	/*const auto fadout = 5.0f;
+	 auto overtime = track.m_time - (track.getLength() - fadout);
+	 overtime = overtime < 0.4f ? 0.4f : overtime;
+	 std::cout << overtime << "\n";
+	 auto a = 1.0f - overtime * 0.3;*/
 	ClearBackground(ColorAlpha(WHITE, 0.4f));
-	
-	auto sub = track.getNextValues();
-	double leftSide = track.getTime();
 
 	for (int i = 0; i < 4; i++) {
 		const auto y = i * 64 / 4;
@@ -56,16 +58,25 @@ void Graphics::drawRenderTexture(Track& track)
 	}
 	DrawLine(0, 63, 511, 63, ColorAlpha(BLACK, 0.8f));
 
+	
+	
+	auto sub = track.getNextValues();
+	double leftSide = track.getTime();
+
+	
+
+	
 	for (const auto& item : sub)
 	{
-		
+		if (item.x > (track.getLength() - 2.0f)) {
+			break;
+		}
 		const auto& tex = track.m_objects[item.i];
 		//DrawTextureEx(tex, { (item.x - (float)leftSide) * 128.0f, item.y * 64.0f + 32.0f }, 180.0f, 1.0f, WHITE);
-		DrawTextureRec(tex, Rectangle{ 0, 0  , (float)tex.width, -(float)tex.height }, { (item.x - (float)leftSide) * 128.0f, item.y * 64.0f + 32.0f }, GREEN);
+		DrawTextureRec(tex, Rectangle{ 0, 0  , (float)tex.width, -(float)tex.height }, { (item.x - (float)leftSide) * 128.0f, item.y * 64.0f + 32.0f }, WHITE);
 		//DrawTexture(tex, (item.x - leftSide) * 128, item.y * 64 + 32, WHITE);
 		//DrawCircle((item.x - leftSide) * 128, item.y * 64 + 32, 8, BLUE);	
 	}
-	
 }
 
 void Graphics::drawHitLine(Level& level)

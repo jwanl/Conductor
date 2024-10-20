@@ -26,33 +26,17 @@ int main(void)
 
     InitAudioDevice();
 
-    const char* level_musics[] = {
-        "../resources/rwbk.wav",
-        "../resources/music.mp3",
-        "../resources/rick.mp3",
-    };
     
 
-    /*Level* level = nullptr;
-    int lastScore = 0;
-
-    int level_selected = 0;
-    float time_out = 8.0f;
-
-    float winMsgTime = 5.0f;
-    float winMsgLeft = winMsgTime;*/
-
-    
-
-    
     Graphics::init("../resources/background.png", 
         {"../resources/conductor_0.png", "../resources/conductor_1.png", "../resources/conductor_2.png"});
 
 
     std::unique_ptr<GameState> state = std::make_unique<MainMenu>();
+    //std::unique_ptr<GameState> state = std::make_unique<LevelState>("../resources/music.mp3", 1);
 
     while (!WindowShouldClose() && !state->should_close()) {
-        
+        if (IsKeyPressed(KEY_TAB)) ToggleFullscreen();
         auto next_state = state->update();
        
 
@@ -65,7 +49,7 @@ int main(void)
 
     }
 
-    //
+    
 
     CloseAudioDevice();
 

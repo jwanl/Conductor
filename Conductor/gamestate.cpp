@@ -46,7 +46,7 @@ void WinScreen::draw()
 
 /* LEVEL STATE */
 
-LevelState::LevelState(const char* audio_file, int levelId) : m_level(new Level(audio_file, 10)), levelId(levelId) {
+LevelState::LevelState(const char* audio_file, int levelId) : m_level(new Level(audio_file, 15)), levelId(levelId) {
     camera.position = { -3.0f, 0.0f, 0.0f };    // Camera position
     camera.target = { 0.0f, 0.0f, 0.0f };      // Camera looking at point
     camera.up = { 0.0f, 0.0f, 1.0f };          // Camera up vector (rotation towards target)
