@@ -107,7 +107,7 @@ void LevelState::draw()
     // Inherited via GameState
 std::unique_ptr<GameState> LevelSelector::update()
 {
-    if (!is_released) {
+      if (!is_released) {
         if (IsKeyReleased(KEY_SPACE)) {
             is_released = true;
         }
@@ -119,7 +119,7 @@ std::unique_ptr<GameState> LevelSelector::update()
     }
     else if (space_pressed < 0.5f && space_pressed > 0.1f && !IsKeyDown(KEY_SPACE)) {
 
-        selected = (selected + 1) % levels.size();
+        selected = (selected + 1) % 3;
         space_pressed = 0;
     }
 
@@ -127,6 +127,7 @@ std::unique_ptr<GameState> LevelSelector::update()
     if (IsKeyDown(KEY_SPACE)) {
         space_pressed += GetFrameTime();
     }
+    return nullptr;
 }
 
 void LevelSelector::draw()
@@ -142,7 +143,7 @@ void LevelSelector::draw()
     ClearBackground(BLACK);
     DrawCenteredText("Super Conductor!", 128, color, 50);
 
-    for (int i = 0; i < levels.size(); i++) {
+    for (int i = 0; i < 3; i++) {
         auto font_size = 64 + std::sin(GetTime() * 1.0f) * 1;
         if (i == selected) {
             font_size = 92;
