@@ -6,3 +6,5 @@ vcpkg_installed
 *.json
 
 *.vcxproj
+
+*.dat

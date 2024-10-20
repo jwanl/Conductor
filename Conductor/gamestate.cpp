@@ -21,6 +21,8 @@ WinScreen::WinScreen(int levelId, int score) {
     m_levelId = levelId;
     m_score = score;
     m_winMsgLeft = 8.0f;
+
+    m_is_high_score = setHighScore(m_levelId, m_score);
 }
 
 // Inherited via GameState
@@ -37,9 +39,12 @@ void WinScreen::draw()
     BeginDrawing();
     ClearBackground(BLACK);
 
-    const auto text_x = GetScreenWidth() * 0.5f - 6 * 36;
-    const auto text_y = GetScreenHeight() * 0.5f;
-    DrawText(TextFormat("You scored %i points", m_score), text_x, text_y, 64, YELLOW);
+    if (m_is_high_score)
+    {
+        DrawCenteredText("New high score!", 64, YELLOW, GetScreenHeight() * 0.4f);
+    }
+
+    DrawCenteredText("You scored " + std::to_string(m_score) + " points", 64, YELLOW, GetScreenHeight() * 0.5f);
 
     EndDrawing();
 }
@@ -145,10 +150,13 @@ void LevelSelector::draw()
 
     for (int i = 0; i < 3; i++) {
         auto font_size = 64 + std::sin(GetTime() * 1.0f) * 1;
+        std::string levelText = levels[i];
         if (i == selected) {
             font_size = 92;
+            levelText = levelText + " (high score: " + std::to_string(getHighScore(i)) + ")";
         }
-        DrawCenteredText(levels[i], font_size, color, 240 + i * 100);
+        
+        DrawCenteredText(levelText, font_size, color, 240 + i * 100);
 
     }
     EndDrawing();

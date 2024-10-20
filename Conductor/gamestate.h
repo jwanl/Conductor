@@ -4,6 +4,7 @@
 #include "raylib.h"
 #include <string>
 #include "graphics.h"
+#include "highscore.h"
 
 class GameState {
 public:
@@ -29,6 +30,7 @@ private:
     int m_levelId;
     int m_score;
     float m_winMsgLeft;
+    bool m_is_high_score;
 };
 
 class LevelState : public GameState {
