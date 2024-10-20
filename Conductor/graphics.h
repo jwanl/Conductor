@@ -17,6 +17,7 @@ public:
 	static void drawConductor(Level& level);
 	static bool updateAnimationTick();
 	static void drawHitLine(Level& level);
+	static void drawProgressBar(float percentage);
 private:
 	static Model m_track_plane;
 	static RenderTexture2D m_track_plane_tex;

@@ -156,6 +156,10 @@ void Graphics::drawConductor(Level& level)
 		0.0f, scale, WHITE);
 }
 
+void Graphics::drawProgressBar(float percentage) {
+	DrawRectangle(0, GetRenderHeight() - 3, (int)(GetRenderWidth() * percentage), 3, GREEN);
+}
+
 bool Graphics::updateAnimationTick()
 {
 	m_tick_time += GetFrameTime();

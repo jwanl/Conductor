@@ -3,8 +3,9 @@
 #include <iostream>
 
 
-Level::Level(const char* audio_file) : m_player(MusicPlayer(audio_file, 4.0f, 0.3f, 200.0f)), m_track(m_player.length())
+Level::Level(const char* audio_file, int length) : m_player(MusicPlayer(audio_file, 4.0f, 0.3f, 200.0f)), m_track(m_player.length())
 {
+	m_length = length;
 	m_time_in_seconds = 0.0;
 	m_current_interval_time = 0.0f;
 	m_baton_up = false;
@@ -35,6 +36,7 @@ void Level::update()
 {
 	m_player.update();
 	m_track.update(GetFrameTime());
+	m_time_in_seconds += GetFrameTime();
 
 	static int num = 0;
 	
@@ -75,10 +77,21 @@ void Level::update()
 	
 	m_baton_up = IsKeyDown(KEY_SPACE);
 
+	// fade out when 2 seconds left
+	if (m_length - m_time_in_seconds <= 2)
+	{
+		float multiplier = std::max((float)(m_length - m_time_in_seconds), 0.0f) * 0.5f;
+		m_player.set_volume(0.3f * multiplier);
+	}
 
-	if (!m_player.is_playing() || IsKeyPressed(KEY_P)) {
+	if (m_time_in_seconds > m_length || !m_player.is_playing() || IsKeyPressed(KEY_P)) {
 		m_over_flag = true;
 	}
 
 	
+}
+
+float Level::getPercentageDone() const {
+	float perc = m_time_in_seconds / (float)m_length;
+	return std::max(std::min(perc, 1.0f), 0.0f);
 }
