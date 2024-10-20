@@ -11,6 +11,7 @@
 #include "gamestate.h"
 
 
+
 int main(void)
 {
     SetTraceLogLevel(LOG_TRACE);
@@ -26,10 +27,10 @@ int main(void)
 
     InitAudioDevice();
 
-    
 
-    Graphics::init("../resources/background.png", 
-        {"../resources/conductor_0.png", "../resources/conductor_1.png", "../resources/conductor_2.png"});
+    
+    Graphics::init(RES("background.png"),
+        {RES("conductor_0.png"), RES("conductor_1.png"), RES("conductor_2.png")});
 
 
     std::unique_ptr<GameState> state = std::make_unique<MainMenu>();
