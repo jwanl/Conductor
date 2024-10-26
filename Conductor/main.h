@@ -2,7 +2,7 @@
 
 #include <random>
 
-#ifdef NDEBUG
+#if defined(NDEBUG) || defined(PLATFORM_WEB)
 
 #define RES(path) "resources/"  path
 #else

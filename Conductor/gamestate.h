@@ -7,6 +7,12 @@
 #include "graphics.h"
 #include "highscore.h"
 
+#ifdef PLATFORM_WEB
+    #define MENU_ITEMS { "play" }
+#else
+    #define MENU_ITEMS { "play", "quit" }
+#endif
+
 class GameState {
 public:
     virtual ~GameState() {}
@@ -78,8 +84,5 @@ public:
 private:
     int selected = 0;
     float space_pressed = 0.0f;
-    std::vector<std::string> menu_items = {
-        "play",
-        "quit"
-    };
+    std::vector<std::string> menu_items = MENU_ITEMS;
 };
