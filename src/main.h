@@ -7,7 +7,7 @@
 #define RES(path) "resources/"  path
 #else
 
-#define RES(path) "../resources/"  path
+#define RES(path) "../../resources/"  path
 #endif
 
 

@@ -8,9 +8,7 @@
 #include "level.h"
 #include "raylib.h"
 
-#if 1
-int main() { std::cout << "Hello\n"; }
-#else
+
 
 #if defined(PLATFORM_WEB)
 #include <emscripten/emscripten.h>
@@ -18,54 +16,58 @@ int main() { std::cout << "Hello\n"; }
 
 std::unique_ptr<GameState> state;
 
-void updateDrawFrame() {
-  if (IsKeyPressed(KEY_TAB)) ToggleFullscreen();
-  auto next_state = state->update();
+void updateDrawFrame()
+{
+	if (IsKeyPressed(KEY_TAB)) ToggleFullscreen();
+	auto next_state = state->update();
 
-  if (next_state) {
-    state = std::move(next_state);
-  } else {
-    state->draw();
-  }
+	if (next_state)
+	{
+		state = std::move(next_state);
+	}
+	else
+	{
+		state->draw();
+	}
 }
 
-int main(void) {
-  SetTraceLogLevel(LOG_TRACE);
-  // GameState state = GameState::MainMenu;
+int main(void)
+{
+	SetTraceLogLevel(LOG_TRACE);
+	// GameState state = GameState::MainMenu;
 
-  // Initialization
-  const int screenWidth = 1280;
-  const int screenHeight = 720;
+	// Initialization
+	const int screenWidth = 1280;
+	const int screenHeight = 720;
 
-  InitWindow(screenWidth, screenHeight, "Super Conductor Bros");
+	InitWindow(screenWidth, screenHeight, "Super Conductor Bros");
 
-  InitAudioDevice();
+	InitAudioDevice();
 
-  Graphics::init(
-      RES("background.png"),
-      {RES("conductor_0.png"), RES("conductor_1.png"), RES("conductor_2.png")});
+	Graphics::init(
+		RES("background.png"),
+		{ RES("conductor_0.png"), RES("conductor_1.png"), RES("conductor_2.png") });
 
-  state = std::make_unique<MainMenu>();
-  // std::unique_ptr<GameState> state = std::make_unique<MainMenu>();
-  // std::unique_ptr<GameState> state =
-  // std::make_unique<LevelState>("../resources/music.mp3", 1);
+	state = std::make_unique<MainMenu>();
+	// std::unique_ptr<GameState> state = std::make_unique<MainMenu>();
+	// std::unique_ptr<GameState> state =
+	// std::make_unique<LevelState>("../resources/music.mp3", 1);
 
 #if defined(PLATFORM_WEB)
-  emscripten_set_main_loop(updateDrawFrame, 0, 1);
+	emscripten_set_main_loop(updateDrawFrame, 0, 1);
 #else
-  SetTargetFPS(30);  // Set our game to run at 60 frames-per-second
+	SetTargetFPS(30);  // Set our game to run at 60 frames-per-second
 
-  while (!WindowShouldClose() && !state->should_close()) {
-    updateDrawFrame();
-  }
+	while (!WindowShouldClose() && !state->should_close())
+	{
+		updateDrawFrame();
+	}
 #endif
 
-  CloseAudioDevice();
+	CloseAudioDevice();
 
-  // De-Initialization
-  CloseWindow();  // Close window and OpenGL context
+	// De-Initialization
+	CloseWindow();  // Close window and OpenGL context
 
-  return 0;
+	return 0;
 }
-
-#endif
