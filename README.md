@@ -1,7 +1,7 @@
 # Super Conductor
 
 ## Build instructions
-git clone --recurse-submodules https://github.com/jwanl/Conductor.git\
+git clone --recurse-submodules https://github.com/jwanl/Conductor.git \
 cd Conductor\
 mkdir build\
 cmake -S .. -B .
